@@ -38,6 +38,14 @@
       <p class="product-label">NEW ARRIVAL</p>
       <h1 class="product-title">CloudNine Hanging Rest Spot</h1>
       <p class="product-price">$19.99</p>
+      <div class="product-meta">
+        <div class="product-meta__rating" aria-label="Rated 4.7 out of 5">
+          <span class="product-meta__stars" aria-hidden="true">★★★★★</span>
+          <span class="product-meta__rating-score">4.7</span>
+        </div>
+        <a class="product-meta__reviews" href="#reviews">1 review</a>
+        <span class="product-meta__sku">SKU: CN-REST-SPOT</span>
+      </div>
 
       <!-- Selling points (with top/bottom dividers) -->
       <div class="sp-block" aria-label="Product highlights">
@@ -71,8 +79,10 @@
         </ul>
       </div>
 
-      <div class="product-rating">★★★★★ <span>(4.7)</span></div>
-      <p class="product-shade" style="display:none;">Shade: <span id="selectedShade"></span></p>
+      <div class="product-color" aria-live="polite">
+        <span class="product-color__label">Color:</span>
+        <span class="product-color__value" id="selectedShade">&mdash;</span>
+      </div>
 
       <!-- COLOR SWATCHES -->
       <div class="swatch-wrapper" id="pdp-swatchWrapper"></div>
@@ -87,11 +97,15 @@
 
           <!-- Quantity (inside the form) -->
           <div class="quantity-wrapper">
-            <button type="button" class="qty-btn" id="pdp-qtyMinus">−</button>
-            <span class="qty-display" id="pdp-qtyValue">1</span>
-            <button type="button" class="qty-btn" id="pdp-qtyPlus">+</button>
+            <div class="quantity-control" role="group" aria-label="Quantity">
+              <button type="button" class="qty-btn" id="pdp-qtyMinus" aria-label="Decrease quantity">−</button>
+              <span class="qty-display" id="pdp-qtyValue" aria-live="polite" aria-atomic="true">1</span>
+              <button type="button" class="qty-btn" id="pdp-qtyPlus" aria-label="Increase quantity">+</button>
+            </div>
             <input type="hidden" name="quantity" value="1" id="pdp-quantityInput"/>
           </div>
+
+          <p class="stock-status">In stock</p>
 
           <add-to-cart-component
             ref="addToCartButtonContainer"
@@ -265,10 +279,92 @@
   .pdp-scope .product-form { flex: 0 0 50%; }
 
   .pdp-scope .product-label { font-size: 0.7rem; color: #999; letter-spacing: 1.2px; margin-bottom: 0.4rem; text-transform: uppercase; }
-  .pdp-scope .product-title { font-family: "Playfair Display", serif; font-size: 2rem; font-weight: 500; margin-bottom: 0.4rem; letter-spacing: 0.5px; }
-  .pdp-scope .product-price { font-size: 1.3rem;margin-top: 0;  font-weight: 400; margin-bottom: 0.95rem; }
-  .pdp-scope .product-rating { font-size: 0.95rem; margin-bottom: 0.7rem; }
-  .pdp-scope .product-rating span { color: #aaa; margin-left: 0.25em; }
+  .pdp-scope .product-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 2.35rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.35rem;
+  }
+  .pdp-scope .product-price {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin: 0 0 1.1rem;
+    letter-spacing: 0.04em;
+  }
+  .pdp-scope .product-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.9rem;
+    margin-bottom: 1.25rem;
+    font-size: 0.88rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .pdp-scope .product-meta__rating {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 600;
+    color: #a06b07;
+  }
+  .pdp-scope .product-meta__stars {
+    font-size: 1rem;
+    letter-spacing: 0.3em;
+  }
+  .pdp-scope .product-meta__rating-score {
+    font-size: 0.9rem;
+    color: #111;
+  }
+  .pdp-scope .product-meta__reviews {
+    font-weight: 600;
+    color: #111;
+    text-decoration: none;
+    position: relative;
+  }
+  .pdp-scope .product-meta__reviews::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -0.2rem;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    transform-origin: left;
+    transition: transform 0.2s ease;
+  }
+  .pdp-scope .product-meta__reviews:hover::after,
+  .pdp-scope .product-meta__reviews:focus-visible::after {
+    transform: scaleX(0);
+  }
+  .pdp-scope .product-meta__reviews:focus-visible {
+    outline: 2px solid #111;
+    outline-offset: 3px;
+  }
+  .pdp-scope .product-meta__sku {
+    font-weight: 500;
+    color: #555;
+  }
+  .pdp-scope .product-color {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-bottom: 0.7rem;
+    font-size: 0.92rem;
+  }
+  .pdp-scope .product-color__label {
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #888;
+    font-size: 0.78rem;
+  }
+  .pdp-scope .product-color__value {
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
   /* Selling points block with top/bottom dividers */
   .pdp-scope .sp-block{
     border-top:1px solid #e3e3e3;
@@ -312,7 +408,6 @@
     70%{transform:scale(2.2);opacity:0}
     100%{transform:scale(1);opacity:0}
   }
-  .pdp-scope .product-shade { font-size: 0.85rem; margin-bottom: 0.5rem; }
   .pdp-scope .product-description {
     font-size: 0.9rem;
     line-height: 1.4;
@@ -321,19 +416,101 @@
     color: #555;
   }
 
-  .pdp-scope .atc-button { background: #fff; color: #111; border: 1px solid #111; padding: 0.75rem 1.5rem; font-size: 1rem; width: 100%; margin-bottom: 0.5rem; transition: all 0.3s ease; }
-  .pdp-scope .atc-button:hover { background: #111; color: #fff; }
-  .pdp-scope .buy-now-button { background: #111; color: #fff; border: none; padding: 0.75rem 1.5rem; font-size: 1rem; width: 100%; transition: background 0.3s ease; }
-  .pdp-scope .buy-now-button:hover { background: #333; }
+  .pdp-scope .atc-button {
+    position: relative;
+    overflow: hidden;
+    background: #f7e32c;
+    color: #111;
+    border: none;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    width: 100%;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 700;
+    border-radius: 999px;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .pdp-scope .atc-button .bg-slide { display: none; }
+  .pdp-scope .atc-button:hover { background: #e7d30f; transform: translateY(-1px); }
+  .pdp-scope .atc-button:active { transform: translateY(0); }
+  .pdp-scope .atc-button:focus-visible {
+    outline: 3px solid #111;
+    outline-offset: 3px;
+  }
+  .pdp-scope .buy-now-button {
+    background: #111;
+    color: #fff;
+    border: 1px solid #111;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    width: 100%;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 700;
+    border-radius: 999px;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .pdp-scope .buy-now-button:hover { background: #222; }
+  .pdp-scope .buy-now-button:focus-visible {
+    outline: 3px solid #111;
+    outline-offset: 3px;
+  }
   .pdp-scope .add-to-cart-error { color: #c62828; font-size: .9rem; margin:.5rem 0 1rem; }
 
-  .pdp-scope .swatch-wrapper { display: flex; align-items: center; gap: 0.4rem; margin-bottom: 1.1rem; }
-  .pdp-scope .swatch { width: 26px; height: 26px; cursor: pointer; }
+  .pdp-scope .swatch-wrapper { display: flex; align-items: center; gap: 0.4rem; margin-bottom: 1.2rem; }
+  .pdp-scope .swatch { width: 28px; height: 28px; cursor: pointer; border-radius: 50%; border: 1px solid transparent; transition: transform 0.2s ease; }
   .pdp-scope .swatch.selected { outline: 1px solid #111; outline-offset: 2px; }
+  .pdp-scope .swatch:hover { transform: translateY(-1px); }
 
-  .pdp-scope .quantity-wrapper { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.1rem; margin-top: 0.3rem; }
-  .pdp-scope .qty-btn { width: 38px; height: 30px; border: 1px solid #ccc; background: #fff; cursor: pointer; font-size: 1.05rem; }
-  .pdp-scope .qty-display { font-size: 0.98rem; }
+  .pdp-scope .quantity-wrapper {
+    margin: 1.2rem 0 0.75rem;
+  }
+  .pdp-scope .quantity-control {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 999px;
+    border: 1px solid #111;
+    background: #f9f9f9;
+  }
+  .pdp-scope .qty-btn {
+    width: 42px;
+    height: 42px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 1.4rem;
+    line-height: 1;
+    font-weight: 600;
+    color: #111;
+    border-radius: 999px;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .pdp-scope .qty-btn:hover { background: rgba(0, 0, 0, 0.06); }
+  .pdp-scope .qty-btn:focus-visible {
+    outline: 2px solid #111;
+    outline-offset: 2px;
+  }
+  .pdp-scope .qty-display {
+    min-width: 34px;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: #111;
+  }
+
+  .pdp-scope .stock-status {
+    margin: 0 0 1.4rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #0e8a55;
+  }
 
   /* Accordion compact style */
   .pdp-scope .product-details-accordion { margin-top: 1.5rem; }
@@ -584,6 +761,7 @@
     const mobileImageStrip = pdpRoot.querySelector('#pdp-mobileImageStrip');
     const addToCartComponent = pdpRoot.querySelector('#pdp-addToCartComponent');
     const variantIdInput = pdpRoot.querySelector('#pdp-variantIdInput');
+    const selectedShade = pdpRoot.querySelector('#selectedShade');
 
     const zoom = createZoomLightbox(pdpRoot);
     let currentVariantImages = [];
@@ -673,6 +851,9 @@
       }
       if (variantIdInput) {
         variantIdInput.value = variant.id;
+      }
+      if (selectedShade) {
+        selectedShade.textContent = variant.title;
       }
       currentVariantImages = normalizeVariantImages(variant);
       currentImageIndex = 0;
