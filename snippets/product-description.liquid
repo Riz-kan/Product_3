@@ -22,7 +22,14 @@
       <div class="product-thumbnails" id="pdp-productThumbnails"></div>
       <img
         id="pdp-mainProductImage"
-        src=""
+        src="https://cdn.shopify.com/s/files/1/0623/9718/6166/files/Sbfd9b49d5eb548c9bb90a8dfa8b675c9Z.webp?v=1754469861&width=1200"
+        srcset="https://cdn.shopify.com/s/files/1/0623/9718/6166/files/Sbfd9b49d5eb548c9bb90a8dfa8b675c9Z.webp?v=1754469861&width=480 480w, https://cdn.shopify.com/s/files/1/0623/9718/6166/files/Sbfd9b49d5eb548c9bb90a8dfa8b675c9Z.webp?v=1754469861&width=720 720w, https://cdn.shopify.com/s/files/1/0623/9718/6166/files/Sbfd9b49d5eb548c9bb90a8dfa8b675c9Z.webp?v=1754469861&width=960 960w, https://cdn.shopify.com/s/files/1/0623/9718/6166/files/Sbfd9b49d5eb548c9bb90a8dfa8b675c9Z.webp?v=1754469861&width=1200 1200w, https://cdn.shopify.com/s/files/1/0623/9718/6166/files/Sbfd9b49d5eb548c9bb90a8dfa8b675c9Z.webp?v=1754469861&width=1500 1500w"
+        sizes="(min-width: 1024px) 50vw, 100vw"
+        width="1200"
+        height="1500"
+        loading="eager"
+        decoding="async"
+        fetchpriority="high"
         alt="Product image"
         role="button"
         tabindex="0"
@@ -775,6 +782,36 @@
       }
     ];
 
+    const RESPONSIVE_WIDTHS = [480, 720, 960, 1200, 1500];
+    const MAIN_IMAGE_SIZES = '(min-width: 1024px) 50vw, 100vw';
+    const THUMB_WIDTH = 320;
+    const MOBILE_STRIP_WIDTH = 960;
+
+    const createSizedSrc = (src, width) => {
+      try {
+        const url = new URL(src);
+        url.searchParams.set('width', String(width));
+        return url.toString();
+      } catch (error) {
+        return src;
+      }
+    };
+
+    const buildSrcSet = (src) => RESPONSIVE_WIDTHS
+      .map((width) => `${createSizedSrc(src, width)} ${width}w`)
+      .join(', ');
+
+    const applyMainImageSources = (imageEl, originalSrc) => {
+      if (!imageEl || !originalSrc) {
+        return;
+      }
+      const preferredWidth = RESPONSIVE_WIDTHS[RESPONSIVE_WIDTHS.length - 2]; // 1200w
+      imageEl.src = createSizedSrc(originalSrc, preferredWidth);
+      imageEl.srcset = buildSrcSet(originalSrc);
+      imageEl.sizes = MAIN_IMAGE_SIZES;
+      imageEl.dataset.fullSrc = originalSrc;
+    };
+
     const swatchWrapper = pdpRoot.querySelector('#pdp-swatchWrapper');
     const thumbsDiv = pdpRoot.querySelector('#pdp-productThumbnails');
     const mainImage = pdpRoot.querySelector('#pdp-mainProductImage');
@@ -802,7 +839,7 @@
       currentImageIndex = index;
       const item = currentVariantImages[index];
       if (mainImage) {
-        mainImage.src = item.src;
+        applyMainImageSources(mainImage, item.src);
         mainImage.alt = item.alt || mainImageBaseAlt;
       }
       if (addToCartComponent) {
@@ -825,7 +862,7 @@
       images.forEach((image, i) => {
         const thumb = document.createElement('img');
         thumb.className = 'thumbnail' + (i === currentImageIndex ? ' active' : '');
-        thumb.src = image.src;
+        thumb.src = createSizedSrc(image.src, THUMB_WIDTH);
         thumb.alt = image.alt || `Thumbnail ${i + 1}`;
         thumb.loading = i === 0 ? 'eager' : 'lazy';
         thumb.decoding = 'async';
@@ -845,7 +882,7 @@
       mobileImageStrip.innerHTML = '';
       images.forEach((image, i) => {
         const img = document.createElement('img');
-        img.src = image.src;
+        img.src = createSizedSrc(image.src, MOBILE_STRIP_WIDTH);
         img.loading = i === 0 ? 'eager' : 'lazy';
         img.decoding = 'async';
         img.draggable = false;
