@@ -13,7 +13,9 @@
 <script src="{{ 'product-form.js' | asset_url }}" type="module"></script>
 <script src="{{ 'fly-to-cart-init.js' | asset_url }}" type="module"></script>
 
-<section id="section-{{ section.id }}" class="pdp-scope">
+{% assign pdp_root_id = root_id | default: 'pdp-product' %}
+
+<section id="{{ pdp_root_id }}" class="pdp-scope">
   <div class="product-wrapper">
     <!-- LEFT: Product Image + Thumbnails + Mobile Scroller -->
     <div class="product-image">
@@ -533,7 +535,7 @@
 </style>
 
 <script type="module">
-  const pdpRoot = document.getElementById('section-{{ section.id }}');
+  const pdpRoot = document.getElementById('{{ pdp_root_id }}');
   if (!pdpRoot) {
     console.warn('PDP root not found for zoom integration.');
   } else {
@@ -1431,14 +1433,3 @@
 }
 </script>
 
-{% schema %}
-{
-  "name": "ProductDescription",
-  "settings": [],
-  "presets": [
-    {
-      "name": "ProductDescription"
-    }
-  ]
-}
-{% endschema %}

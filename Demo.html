@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>PDP — Replica (Specs Applied)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Rubik:wght@400;500;700&family=Tomorrow:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --fg:#282828;          /* updated to match inspect */
+    --muted:#6b7280;
+    --ok:#1e9d62;
+    --star:#f5a623;
+    --btn-1:#F2FF2A;       /* Add to Cart yellow */
+    --btn-1-fg:#0B0D10;
+    --btn-2:#405DE6;       /* Shopify blue */
+    --btn-2-fg:#fff;
+    --gutter:32px;
+    --swatch:40px;         /* per inspect */
+    --border:#D1D5DB;
+    --border-strong:#0B0D10;
+    --shadow:0;
+  }
+  *{box-sizing:border-box}
+  body{margin:0; font:16px/1.5 Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; color:var(--fg); background:#fff}
+  .wrap{max-width:720px; margin:40px auto; padding:0 var(--gutter)}
+
+  /* Title per inspect: Tomorrow 40px */
+  .title{
+    font-family:Tomorrow,Inter,sans-serif;
+    font-weight:900;
+    font-size:40px;
+    line-height:1.1;
+    letter-spacing:.5px;
+    text-transform:uppercase;
+    margin:0 0 24px;
+  }
+
+  /* Price per inspect: Rubik 22px */
+  .price{
+    font:500 22px/1.2 Rubik,Inter,sans-serif;
+    color:#282828;
+    margin:0 0 10px;
+  }
+
+  /* Reviews + SKU on same row */
+  .meta-row{
+    display:flex; align-items:center; gap:12px;
+    color:var(--muted); font-size:14px; margin:6px 0 12px;
+  }
+  .stars{color:var(--star); font-size:18px; letter-spacing:2px}
+  .meta-spacer{flex:1}
+  .divider{height:1px; background:#eee; margin:12px 0 18px}
+
+  .label{display:block; font-weight:600; margin:14px 0 8px}
+
+  /* Swatches: 42px with 6px radius */
+  .swatches{display:flex; gap:12px; align-items:center}
+  .swatch{
+    width:var(--swatch); height:var(--swatch);
+    border:2px solid var(--border);
+    border-radius:0px;
+    box-shadow:var(--shadow);
+    cursor:pointer; position:relative; overflow:hidden;
+  }
+  .swatch[aria-checked="true"]{border-color:var(--border-strong)}
+  .swatch input{position:absolute; inset:0; opacity:0; cursor:pointer}
+  .swatch .tile{position:absolute; inset:0}
+  .split::before,.split::after{content:""; position:absolute; inset:0}
+  .split::before{background:var(--left,#ddd)}
+  .split::after{
+    background:var(--right,#ddd);
+    clip-path:polygon(100% 0,100% 100%,0 100%);
+  }
+
+  /* Clean Quantity */
+  .qty{display:flex; align-items:center}
+  .stepper-clean{
+    display:inline-grid;
+    grid-template-columns:48px 64px 48px;
+    place-items:center;
+    border:1px solid var(--border);
+    border-radius:0; background:#fff;
+  }
+  .stepper-clean button{
+    width:100%; height:44px;
+    border:0; background:#fff;
+    color:#1a1a1a; font-size:22px; line-height:1; cursor:pointer;
+  }
+  .stepper-clean input{
+    width:100%; height:44px; border:0; background:#fff;
+    text-align:center; font:600 16px/1 Inter; outline:none;
+  }
+
+  .stock{color:var(--ok); font-weight:600; margin:12px 0 18px}
+
+  /* CTAs: 52px, square */
+  .cta{display:grid; gap:14px; margin-top:8px}
+  .btn{
+    display:inline-flex; justify-content:center; align-items:center;
+    width:100%; height:52px;
+    border-radius:0; border:0; cursor:pointer;
+    font:700 14px/1 Inter; text-transform:uppercase; letter-spacing:0.12em;
+    padding:0 35px; box-shadow:var(--shadow);
+  }
+  .btn-primary{background:var(--btn-1); color:var(--btn-1-fg)}
+  .btn-accelerate{background:var(--btn-2); color:var(--btn-2-fg)}
+
+  @media (max-width:560px){
+    .title{font-size:34px}
+  }
+</style>
+</head>
+<body>
+  <main class="wrap">
+    <h1 class="title">MAISON KITSUNÉ<br>CASE FOR AIRPODS PRO</h1>
+
+    <div class="price">$29.99</div>
+
+    <div class="meta-row">
+      <div class="stars" aria-label="Rating: 5 out of 5">★★★★★</div>
+      <a href="#" style="color:inherit; text-decoration:underline;">1 review</a>
+      <div class="meta-spacer"></div>
+      <div class="sku">SKU: APPRO-BLU-MK</div>
+    </div>
+    <div class="divider"></div>
+
+    <label class="label" for="color">Color: <span id="colorName">Blue</span></label>
+    <div class="swatches" role="radiogroup" aria-label="Choose color">
+      <!-- Olive -->
+      <label class="swatch" role="radio" aria-checked="false" data-name="Olive" title="Olive">
+        <input type="radio" name="color">
+        <span class="tile" style="background:#3f4636;"></span>
+      </label>
+      <!-- Blue/Grey (selected) -->
+      <label class="swatch split" role="radio" aria-checked="true" data-name="Blue" title="Blue"
+             style="--left:#7e8b95; --right:#aeb7bf;">
+        <input type="radio" name="color" checked>
+      </label>
+      <!-- Yellow -->
+      <label class="swatch split" role="radio" aria-checked="false" data-name="Yellow" title="Yellow"
+             style="--left:#fff06a; --right:#fff06a;">
+        <input type="radio" name="color">
+        <span class="tile"></span>
+      </label>
+    </div>
+
+    <label class="label" for="qty">Quantity:</label>
+    <div class="qty">
+      <div class="stepper-clean">
+        <button type="button" id="dec" aria-label="Decrease quantity">−</button>
+        <input id="qty" inputmode="numeric" pattern="[0-9]*" value="1" aria-live="polite" />
+        <button type="button" id="inc" aria-label="Increase quantity">+</button>
+      </div>
+    </div>
+
+    <div class="stock">In stock</div>
+
+    <div class="cta">
+      <button class="btn btn-primary">Add to Cart</button>
+      <button class="btn btn-accelerate">Buy It Now</button>
+    </div>
+  </main>
+
+<script>
+  // Quantity logic (min 1)
+  const qty = document.getElementById('qty');
+  document.getElementById('inc').onclick = () => qty.value = Math.max(1, (+qty.value||1) + 1);
+  document.getElementById('dec').onclick = () => qty.value = Math.max(1, (+qty.value||1) - 1);
+
+  // Swatch selection + live color label
+  const nameOut = document.getElementById('colorName');
+  document.querySelectorAll('.swatch').forEach(s => {
+    s.addEventListener('click', () => {
+      document.querySelectorAll('.swatch').forEach(x => x.setAttribute('aria-checked','false'));
+      s.setAttribute('aria-checked','true');
+      s.querySelector('input').checked = true;
+      nameOut.textContent = s.dataset.name || '—';
+    });
+  });
+</script>
+</body>
+</html>
