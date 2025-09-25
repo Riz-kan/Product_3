@@ -39,9 +39,25 @@
       <h1 class="product-title">CloudNine Hanging Rest Spot</h1>
       <p class="product-price">$19.99</p>
 
-      <div class="product-meta">
-        <div class="meta-stars" aria-label="Rating: 4.7 out of 5">★★★★★</div>
-        <a href="#reviews" class="meta-link">4 reviews</a>
+      <div class="product-meta" aria-label="Product rating and review count">
+        <div class="meta-stars" role="img" aria-label="Rating: 4.7 out of 5">
+          <svg class="meta-star" viewBox="0 -0.5 32 32" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16.0005 0L21.4392 9.27275L32.0005 11.5439L24.8005 19.5459L25.889 30.2222L16.0005 25.895L6.11194 30.2222L7.20049 19.5459L0.000488281 11.5439L10.5618 9.27275L16.0005 0Z" />
+          </svg>
+          <svg class="meta-star" viewBox="0 -0.5 32 32" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16.0005 0L21.4392 9.27275L32.0005 11.5439L24.8005 19.5459L25.889 30.2222L16.0005 25.895L6.11194 30.2222L7.20049 19.5459L0.000488281 11.5439L10.5618 9.27275L16.0005 0Z" />
+          </svg>
+          <svg class="meta-star" viewBox="0 -0.5 32 32" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16.0005 0L21.4392 9.27275L32.0005 11.5439L24.8005 19.5459L25.889 30.2222L16.0005 25.895L6.11194 30.2222L7.20049 19.5459L0.000488281 11.5439L10.5618 9.27275L16.0005 0Z" />
+          </svg>
+          <svg class="meta-star" viewBox="0 -0.5 32 32" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16.0005 0L21.4392 9.27275L32.0005 11.5439L24.8005 19.5459L25.889 30.2222L16.0005 25.895L6.11194 30.2222L7.20049 19.5459L0.000488281 11.5439L10.5618 9.27275L16.0005 0Z" />
+          </svg>
+          <svg class="meta-star" viewBox="0 -0.5 32 32" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16.0005 0L21.4392 9.27275L32.0005 11.5439L24.8005 19.5459L25.889 30.2222L16.0005 25.895L6.11194 30.2222L7.20049 19.5459L0.000488281 11.5439L10.5618 9.27275L16.0005 0Z" />
+          </svg>
+        </div>
+        <span class="meta-count" aria-label="4 reviews">(4)</span>
       </div>
 
       <!-- Selling points (with top/bottom dividers) -->
@@ -324,23 +340,28 @@
   .pdp-scope .product-meta {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     font-size: 0.875rem;
     color: var(--pdp-muted);
     margin-bottom: 1.1rem;
   }
   .pdp-scope .meta-stars {
-    color: var(--pdp-star);
-    font-size: 1.25rem;
-    letter-spacing: 0.2em;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
   }
-  .pdp-scope .meta-link {
-    color: inherit;
-    text-decoration: underline;
+  .pdp-scope .meta-star {
+    width: 1.25rem;
+    height: 1.25rem;
+    display: block;
   }
-  .pdp-scope .meta-link:focus-visible,
-  .pdp-scope .meta-link:hover {
-    color: var(--pdp-fg);
+  .pdp-scope .meta-star path {
+    fill: var(--pdp-star);
+  }
+  .pdp-scope .meta-count {
+    color: var(--pdp-muted);
+    font-weight: 600;
+    letter-spacing: 0.02em;
   }
   /* Selling points block with top/bottom dividers */
   .pdp-scope .sp-block{
