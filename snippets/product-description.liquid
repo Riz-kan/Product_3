@@ -797,9 +797,29 @@
     let currentImageIndex = 0;
     const mainImageBaseAlt = (mainImage && mainImage.getAttribute('alt')) || 'Product image';
 
+    const buildResponsiveSrc = (src, width) => {
+      try {
+        const url = new URL(src);
+        url.searchParams.set('width', String(width));
+        return url.toString();
+      } catch (error) {
+        console.warn('Unable to build sized image URL for', src, error);
+        return src;
+      }
+    };
+
+    const buildSrcset = (src) => {
+      const widths = [480, 720, 960, 1200];
+      const candidates = widths
+        .map((width) => `${buildResponsiveSrc(src, width)} ${width}w`)
+        .join(', ');
+      return candidates;
+    };
+
     function normalizeVariantImages(variant) {
       return (variant.images || []).map((src, i) => ({
         src,
+        srcset: buildSrcset(src),
         alt: `${variant.title} image ${i + 1}`
       }));
     }
@@ -812,6 +832,11 @@
       const item = currentVariantImages[index];
       if (mainImage) {
         mainImage.src = item.src;
+        if (item.srcset) {
+          mainImage.srcset = item.srcset;
+        } else {
+          mainImage.removeAttribute('srcset');
+        }
         mainImage.alt = item.alt || mainImageBaseAlt;
       }
       if (addToCartComponent) {
